@@ -2,6 +2,7 @@
 #define LIBRARYITEM_HPP
 
 #include <iostream>
+#include <regex>
 #include <string>
 
 class LibraryItem {
@@ -22,6 +23,14 @@ private:
   const std::string ISBN;
   const unsigned int publicationYear;
   const unsigned int numberOfPages;
+
+private:
+  std::string isTitleValid(const std::string &title);
+  std::string isAuthorValid(const std::string &author);
+  std::string isISBNValid(const std::string &ISBN);
+  std::string validatePattern(const std::string &line, const std::string &pattern);
+  unsigned int isPublicationYearValid(const unsigned int publicationYear);
+  unsigned int isNumberOfPagesValid(const unsigned int numberOfPages);
 };
 
 #endif
