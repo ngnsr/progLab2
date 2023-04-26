@@ -31,10 +31,9 @@
 *.out
 *.app
 
-CMakeFiles/
-.git/
-
 CMakeCache.txt
 cmake_install.cmake
-Makefile
-prog
+build/
+.idea/
+.cmake
+.ninja*

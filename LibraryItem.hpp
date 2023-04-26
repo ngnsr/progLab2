@@ -8,29 +8,53 @@
 class LibraryItem {
 public:
   LibraryItem(std::string title, std::string author,
-              unsigned int publicationYear, std::string ISBN,
+              unsigned int publicationYear, unsigned int id,
               unsigned int numberOfPages);
+
+  LibraryItem(const LibraryItem &other);
+
   std::string getTitle() const;
+
   std::string getAuthor() const;
-  std::string getISBN() const;
+
+  unsigned int getId() const;
+
   unsigned int getPublicationYear() const;
+
   unsigned int getNumberOfPages() const;
-  bool operator<(const LibraryItem &other) const;
+
+  void setTitle(const std::string &title);
+
+  void setAuthor(const std::string &author);
+
+  void setId(const unsigned int &id);
+
+  void setPublicationYear(unsigned int publicationYear);
+
+  void setNumberOfPages(unsigned int numberOfPages);
+
   virtual std::string toString();
-  virtual void display();
+
+  void display();
+
+  bool operator<(const LibraryItem &other) const;
+
+  LibraryItem &operator=(const LibraryItem &other);
 
 private:
-  const std::string title;
-  const std::string author;
-  const std::string ISBN;
-  const unsigned int publicationYear;
-  const unsigned int numberOfPages;
+  std::string title;
+  std::string author;
+  unsigned int id;
+  unsigned int publicationYear;
+  unsigned int numberOfPages;
 
 private:
-  std::string checkPrintableString(const std::string &author) const;
-  std::string checkISBN(const std::string &ISBN) const;
-  std::string validatePattern(const std::string &line, const std::string &pattern) const;
-  unsigned int checkPublicationYear(const unsigned int &publicationYear) const;
+  static std::string checkPrintableString(const std::string &author);
+
+  static std::string validatePattern(const std::string &line,
+                                     const std::string &pattern);
+
+  static unsigned int checkPublicationYear(const unsigned int &publicationYear);
 };
 
 #endif // !LIBRARYITEM_HPP
