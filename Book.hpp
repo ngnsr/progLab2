@@ -10,6 +10,7 @@ class Book : public LibraryItem {
 public:
   Book(std::string title, std::string author, unsigned int publicationYear,
        unsigned int id, unsigned int numberOfPages, std::string ganre, std::string ISBN);
+  Book(const LibraryItem &libraryItem, std::string ganre, std::string ISBN);
 
   std::string getGanre() const;
   std::string getISBN() const;

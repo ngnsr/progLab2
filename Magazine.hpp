@@ -11,6 +11,7 @@ public:
            unsigned int id, unsigned int numberOfPages, std::string condition,
            std::string ISSN);
 
+  Magazine(const LibraryItem &libraryItem, std::string ganre, std::string ISBN);
   std::string getCondition() const;
   std::string getISSN() const;
   void setCondition(const std::string &newCondition);

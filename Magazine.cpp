@@ -6,6 +6,11 @@ Magazine::Magazine(std::string title, std::string author,
     : LibraryItem(title, author, publicationYear, id, numberOfPages),
       condition(condition), ISSN(checkISSN(ISSN)) {}
 
+Magazine::Magazine(const LibraryItem &libraryItem, std::string condition, std::string ISSN)
+    : LibraryItem(libraryItem.getTitle(), libraryItem.getAuthor(),
+                  libraryItem.getPublicationYear(), libraryItem.getId(),
+                  libraryItem.getNumberOfPages()),condition(condition), ISSN(checkISSN(ISSN)) {}
+
 std::string Magazine::getCondition() const { return condition; }
 
 std::string Magazine::toString() {
@@ -23,9 +28,9 @@ void Magazine::setCondition(const std::string& newCondition){
 }
 
 std::string Magazine::checkISSN(const std::string &ISSN){
-  const std::string ISNNPattern = R"(^\d{4}-\d{3}[0-9xX]$)";
+  const std::string ISSNPattern = R"(^\d{4}-\d{3}[0-9xX]$)";
 
-  if (std::regex_match(ISSN, std::regex(ISNNPattern))) {
+  if (std::regex_match(ISSN, std::regex(ISSNPattern))) {
     return ISSN;
   } else {
     throw std::invalid_argument("Invalid argument");

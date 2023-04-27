@@ -33,13 +33,12 @@ LibraryItem Library::atIndex(int index) const {
   return items[index];
 }
 
-std::vector<LibraryItem>::const_iterator
-Library::search(const std::string title) const {
+const LibraryItem* Library::search(const std::string title) const {
   int index = indexOf(title);
   if (index == -1) {
-    return items.end();
+    return nullptr;
   }
-  return items.begin() + index;
+  return &items[index];
 }
 
 void Library::sort() { std::sort(items.begin(), items.end()); }

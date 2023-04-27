@@ -24,7 +24,7 @@ public:
    */
   int indexOf(std::string title) const;
 
-  std::vector<LibraryItem>::const_iterator search(std::string title) const;
+  const LibraryItem* search(std::string title) const;
 
   /**
    *  @brief Sort Library.items by LibraryItem < operator
