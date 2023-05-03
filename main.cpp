@@ -102,7 +102,6 @@ LibraryItem readLibraryItem() {
   const std::string readPublicationYear = "Enter publication year : \n > ";
   const std::string readId = "Enter id : \n > ";
   const std::string readNumberOfPages = "Enter number of pages : \n > ";
-  clearInputStream();
   while (true) {
     std::string title = readLine(readTitle);
     std::string author = readLine(readAuthor);
@@ -138,7 +137,6 @@ void sort() {
 
 void search() {
   const std::string readTitle = "Enter title: \n > ";
-  clearInputStream();
   std::string title = readLine(readTitle);
   LibraryItem *item = library.search(title);
   if (item != nullptr) {
@@ -149,7 +147,6 @@ void search() {
 
 void remove() {
   const std::string readTitle = "Enter title: \n > ";
-  clearInputStream();
   try {
     std::string title = readLine(readTitle);
     library.remove(title);
@@ -159,7 +156,6 @@ void remove() {
 }
 
 void indexOf() {
-  clearInputStream();
   std::string title = readLine("Enter title: \n > ");
   unsigned int index = library.indexOf(title);
   std::cout << "Index: " << (index != -1 ? std::to_string(index) : "not found!")
@@ -167,7 +163,6 @@ void indexOf() {
 }
 
 void startMenu(std::stack<menu *> &menuStack) {
-  bool executed = false;
   while (!menuStack.empty()) {
     menu *currentMenu = menuStack.top();
 
@@ -175,15 +170,14 @@ void startMenu(std::stack<menu *> &menuStack) {
     std::cout << currentMenu->name << ":\n";
 
     // execute function
-    if (currentMenu->func != nullptr && !executed) {
+    if (currentMenu->func != nullptr) {
       currentMenu->func();
-      executed = true;
     }
 
-    if(currentMenu->func == nullptr){
-      executed = false;
-      // after execution remove action
-      currentMenu->func = nullptr;
+    // if the submenu does not exist, return to the previous one
+    if (currentMenu->children.size() == 0) {
+      menuStack.pop();
+      continue;
     }
 
     // print submenues
@@ -191,30 +185,14 @@ void startMenu(std::stack<menu *> &menuStack) {
     for (auto &submenu : currentMenu->children) {
       std::cout << i++ << ". " << submenu->name << "\n";
     }
-
     std::cout << "0. Exit current menu\n";
 
-    // Get input
-    std::string input;
-    std::cout << " > ";
-    std::cin >> input;
-    std::cout << std::endl;
+    unsigned int mode = readInt(" > ");
 
-    if (input == "0") {
+    if (mode == 0) {
       menuStack.pop();
-      executed = false;
-    } else {
-      int item;
-      try {
-        item = std::stoi(input);
-      } catch (const std::exception &exc) {
-        std::cout << exc.what() << std::endl;
-        continue;
-      }
-
-      if (item >= 1 && item <= currentMenu->children.size()) {
-        menuStack.push(currentMenu->children[item - 1]);
-      }
+    } else if (mode >= 1 && mode <= currentMenu->children.size()) {
+      menuStack.push(currentMenu->children[mode - 1]);
     }
   }
 }
